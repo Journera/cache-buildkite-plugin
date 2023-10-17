@@ -121,6 +121,8 @@ function restore() {
 }
 
 function cache() {
+  set +x +e
+
   TAR_FILE="${CACHE_KEY}.${BK_TAR_EXTENSION}"
   BUCKET="${BUILDKITE_PLUGIN_CACHE_S3_BUCKET}/${BUILDKITE_ORGANIZATION_SLUG}/$(pipeline_slug)"
   TAR_TARGETS=""
@@ -135,6 +137,8 @@ function cache() {
 
   cache_locating "${TAR_TARGETS}"
   TAR_FILE="${CACHE_KEY}.${BK_TAR_EXTENSION}"
+
+  ls -l $TAR_TARGETS
 
   if [ $BK_ALWAYS_CACHE == "true" ]; then
     echo -e "${BK_LOG_PREFIX}:file_cabinet::close: Removing previously found cache ${TAR_FILE} since always is true."
